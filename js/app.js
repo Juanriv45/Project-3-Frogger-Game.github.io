@@ -37,7 +37,7 @@ var Player = function() {
     this.sprite = 'images/char-boy.png';
 };
 
-// function created in order to be able to reset the player after a collision has occured
+// Function created in order to be able to reset the player after a collision has occured
 var resetPlayer = function() {
     player.x = 200;
     player.y = 390;
@@ -47,8 +47,13 @@ var resetPlayer = function() {
 Player.prototype.update = function() {
     for (i = 0; i < allEnemies.length; i++) {
         if (allEnemies[i].y === this.y && allEnemies[i].x < this.x + 45 && allEnemies[i].x + 45 > this.x) {
+            alert("You Crashed!!!!");
             resetPlayer();
         };
+    };
+    if (player.y === -10) {
+        alert("You WIN!!!");
+        resetPlayer();
     };
 };
 
