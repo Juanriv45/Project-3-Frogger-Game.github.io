@@ -59,7 +59,7 @@ Player.prototype.update = function() {
 
 // Renders the player image on the canvas
 Player.prototype.render = function() {
- ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // The players placement shall change depending on the key pressed ('left','right','up','down')
@@ -79,7 +79,7 @@ Player.prototype.handleInput = function(key) {
            break;
         case 'up':
             this.y = this.y - 80;
-            if (this.y < -10){
+            if (this.y < -10) {
                 this.y = -10;
             };
             break;
@@ -104,10 +104,10 @@ var allEnemies = [];
 // This will place the enemies in their respective row and randomly place them on that specific row.
 var createEnemies = function() {
     for (i = 0; i < enemyRow.length; i++) {
-            allEnemies.push(new Enemy(Math.floor(Math.random()*300),enemyRow[i],100));
+        allEnemies.push(new Enemy(Math.floor(Math.random()*300),enemyRow[i],100));
     };
-
 };
+
 createEnemies();
 
 // This listens for key presses and sends the keys to your
