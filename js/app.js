@@ -1,4 +1,3 @@
-var enemyTrailStart = [310,230,150,70];
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
     this.y = y;
@@ -9,9 +8,13 @@ var Enemy = function(x,y,speed) {
     this.sprite = 'images/enemy-bug.png';
 };
 
+// These are the Y-Coordinates where the enemy must be placed on the canvas
+var enemyRow= [310,230,150,70];
+
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
+    // When the enemy moves of the screen on the first time it will return at a random speed
     if (this.x < ctx.canvas.width) {
         this.x += (this.speed * dt);
     } else {
@@ -25,8 +28,6 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-
-
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -36,11 +37,13 @@ var Player = function() {
     this.sprite = 'images/char-boy.png';
 };
 
+// function created in order to be able to reset the player after a collision has occured
 var resetPlayer = function() {
     player.x = 200;
     player.y = 390;
 };
 
+// When the player collides with any of the enemies, the player will be reset to the original start position on the canvas.
 Player.prototype.update = function() {
     for (i = 0; i < allEnemies.length; i++) {
         if (allEnemies[i].y === this.y && allEnemies[i].x < this.x + 45 && allEnemies[i].x + 45 > this.x) {
@@ -49,10 +52,12 @@ Player.prototype.update = function() {
     };
 };
 
+// Renders the player image on the canvas
 Player.prototype.render = function() {
  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// The players placement shall change depending on the key pressed ('left','right','up','down')
 Player.prototype.handleInput = function(key) {
     switch(key) {
         case 'left':
@@ -61,18 +66,18 @@ Player.prototype.handleInput = function(key) {
                 this.x = -2;
             };
             break;
-        case 'up':
-            this.y = this.y - 80;
-            if (this.y < -10){
-                this.y = -10;
-            };
-            break;
         case 'right':
             this.x = this.x + 101;
             if (this.x >= 402) {
                 this.x = 407;
             };
            break;
+        case 'up':
+            this.y = this.y - 80;
+            if (this.y < -10){
+                this.y = -10;
+            };
+            break;
         case 'down':
             this.y = this.y + 80;
             if (this.y >= 390) {
@@ -91,9 +96,10 @@ Player.prototype.handleInput = function(key) {
 var player = new Player;
 var allEnemies = [];
 
+// This will place the enemies in their respective row and randomly place them on that specific row.
 var createEnemies = function() {
-    for (i = 0; i < enemyTrailStart.length; i++) {
-            allEnemies.push(new Enemy(Math.floor(Math.random()*300),enemyTrailStart[i],100));
+    for (i = 0; i < enemyRow.length; i++) {
+            allEnemies.push(new Enemy(Math.floor(Math.random()*300),enemyRow[i],100));
     };
 
 };
